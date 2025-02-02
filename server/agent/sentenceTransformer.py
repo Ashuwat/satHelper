@@ -3,7 +3,8 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 
-def sentence_transformer():
+def sentenceTransformer():
+    print('hi')
     stored_queries = parquet_to_tabular('./dataset/tabular.parquet')
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -23,4 +24,4 @@ def sentence_transformer():
     best_match_idx = indices[0][0]
     best_match_score = distances[0][0]
 
-    return f"Best match: {stored_queries[best_match_idx]} (Similarity: {best_match_score:.4f})"
+    return f"Best match: {stored_queries[best_match_idx]}"
