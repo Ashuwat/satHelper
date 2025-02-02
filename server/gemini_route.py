@@ -16,6 +16,7 @@ def preProcessing_gemini(input: str) -> str:
     2. WHEN USING MATH TO EXPLAIN THE STEPS USE TEX, AND WRITE OUT EACH STEP
     3. MAKE SURE THE SOLUTION IS TRUE
     4. BE CONCISE AND TO THE POINT. DO NOT MAKE IT LONGER THAN IT SHOULD BE. 
+    5. DO NOT SAY ANYTHING ELSE UNLESS IT WILL SOLVE THE PROBLEM. 
 
     HERE IS THE PROBLEM:
     """
@@ -23,5 +24,7 @@ def preProcessing_gemini(input: str) -> str:
     GEMINI_API_KEY = os.getenv("GOOGLE_API_KEY")
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel("gemini-1.5-flash")
-    response = model.generate_content(preProcessing, input)
-    return response
+    response = model.generate_content(preProcessing + input)
+    response_dict = response.to_dict()
+    x = response_dict["candidates"][0]["content"]["parts"][0]["text"]
+    return x

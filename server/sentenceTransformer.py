@@ -3,8 +3,8 @@ from sentence_transformers import SentenceTransformer
 import faiss
 import numpy as np
 
-def sentenceTransformer(query):
-    stored_queries = parquet_to_tabular('./dataset/tabular.parquet')
+def sentenceTransformer(query, number: int):
+    stored_queries = parquet_to_tabular('./tabular.parquet')
 
     model = SentenceTransformer('all-MiniLM-L6-v2')
 
@@ -19,7 +19,8 @@ def sentenceTransformer(query):
     new_query = query #get input
     new_query_vector = model.encode([new_query], normalize_embeddings=True).astype('float32') #this should be on default
     distances, indices = index.search(new_query_vector, k=5)
-    best_match_idx = indices[0][0]
-    best_match_score = distances[0][0]
+    best_match_idx = indices[0][number]
+    best_match_score = distances[0][number]
 
-    return f"{stored_queries[best_match_idx]}"
+    return (stored_queries[best_match_idx], 5)
+

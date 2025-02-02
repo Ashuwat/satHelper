@@ -1,13 +1,71 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import LatexRenderer from "../components/tex";
+import MarkdownRenderer from "../components/tex";
+import { useFormState } from "react-dom";
 
 export default function PrepQuestion() {
   // When clicking the left bottom card, show a mock answer (A-D)
+  const [loading, setLoading] = useState(false);
+  const [Query, setQuery] = useState("");
+  const [response, setResponse] = useState();
+  const [method, setMethod] = useState("");
+  const [index, setIndex] = useState("");
+  const [answer, setAnswer] = useState("");
+  const [similarQuestions, setSimilarQuestions] = useState("");
+
+  const sendSimilarData = async () => {
+    setLoading(true);
+    let message = response;
+    const value = true;
+    const res = await fetch("http://localhost:8000/data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: message, value: value }),
+    });
+
+    const data = await res.json();
+    console.log("data", data);
+    if (data) {
+      setResponse(data["query"]);
+      setAnswer(data["answer"]);
+      setMethod(data["method"]);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    const message = sessionStorage.getItem("searchQuery");
+    const value = false;
+    setLoading(true);
+
+    const sendData = async () => {
+      setLoading(true);
+      const res = await fetch("http://localhost:8000/data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: message, value: value }),
+      });
+
+      const data = await res.json();
+      console.log("data", data);
+      if (data) setResponse(data["query"]);
+      setAnswer(data["answer"]);
+      setMethod(data["method"]);
+      setLoading(false);
+    };
+    sendData();
+  }, []);
+
   const handleAnswerClick = () => {
-    const answers = ['A', 'B', 'C', 'D'];
+    const answers = ["A", "B", "C", "D"];
     const randomAnswer = answers[Math.floor(Math.random() * answers.length)];
     alert(`Answer: ${randomAnswer}`);
   };
@@ -32,7 +90,7 @@ export default function PrepQuestion() {
           {/* Icons background layer in front of blue background, behind cards */}
           <div
             className="absolute inset-0 bg-[url('/icon-tiles.png')] bg-[length:200px_200px] bg-center opacity-40"
-            style={{ clipPath: 'polygon(0 30%, 100% 20%, 100% 100%, 0 100%)' }}
+            style={{ clipPath: "polygon(0 30%, 100% 20%, 100% 100%, 0 100%)" }}
           ></div>
           {/* Card content container */}
           <div className="relative flex flex-col p-4 space-y-4 w-full">
@@ -40,8 +98,10 @@ export default function PrepQuestion() {
             <div className="flex-1 flex justify-center items-center">
               <div className="flex flex-col h-[417px] w-[750px] bg-white shadow-lg rounded-lg overflow-hidden">
                 {/* (Optional: Add a header area here if needed) */}
-                <div className="flex-1 flex justify-center items-center">
-                  <p>Insert SAT question</p>
+                <div className="flex-1 flex justify-center items-center text-lg p-8">
+                  <MarkdownRenderer
+                    markdown={loading ? "Loading..." : response}
+                  />
                 </div>
               </div>
             </div>
@@ -61,11 +121,19 @@ export default function PrepQuestion() {
               <div className="flex-1 flex flex-col space-y-4 justify-center items-center p-1">
                 {/* Top small card: repeat.png with hover overlay */}
                 <div className="relative group flex h-[150px] w-[300px] bg-white justify-center items-center shadow-lg rounded-lg cursor-pointer">
-                  <Image src="/repeat.png" alt="Repeat" width={100} height={100} />
+                  <Image
+                    src="/repeat.png"
+                    alt="Repeat"
+                    width={100}
+                    height={100}
+                  />
                   {/* Hover overlay */}
-                  <div className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg">
+                  <div
+                    onClick={() => sendSimilarData()}
+                    className="absolute inset-0 flex justify-center items-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg"
+                  >
                     <span className="text-white text-center px-2">
-                      Generate another similar question?
+                      <h3>Generate another similar question?</h3>
                     </span>
                   </div>
                 </div>
@@ -108,17 +176,7 @@ export default function PrepQuestion() {
             </h2>
           </div>
           <div className="h-full bg-white shadow-lg rounded-lg p-4 overflow-y-auto">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              varius, magna in convallis interdum, odio ex condimentum augue, at
-              pretium mauris nisi ac risus. Nulla facilisi. Phasellus tempus
-              dolor non mauris ultricies, a feugiat libero condimentum. Vivamus
-              vel ex non libero hendrerit ullamcorper. Donec maximus lacus ut
-              tortor condimentum, ac vulputate urna fermentum. Donec pharetra
-              commodo purus, et sagittis urna ultrices sed. Pellentesque
-              habitant morbi tristique senectus et netus et malesuada fames ac
-              turpis egestas. [Add as much text as you need...]
-            </p>
+            <MarkdownRenderer markdown={loading ? "loading..." : method} />
           </div>
         </div>
       </div>
