@@ -1,0 +1,16 @@
+/* components/NavBar.module.css */
+
+.navBar {
+    background-color: #1E1E1E;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+  }
+  
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
