@@ -4,7 +4,6 @@ import faiss
 import numpy as np
 
 def sentenceTransformer():
-    print('hi')
     stored_queries = parquet_to_tabular('./dataset/tabular.parquet')
 
     model = SentenceTransformer('all-MiniLM-L6-v2')

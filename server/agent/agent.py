@@ -3,7 +3,6 @@ from uagents import Agent, Context
 import asyncio
 
 agent = Agent(name="TST")
-
 @agent.on_event("startup")
 async def initialize_storage(ctx: Context):
     current_count = ctx.storage.get("count")
