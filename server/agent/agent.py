@@ -1,5 +1,5 @@
 from uagents import Agent, Context
- 
+from sentence_transformer import sentence_transformer
 agent = Agent(name="bob")
  
 @agent.on_event("startup")
@@ -12,5 +12,4 @@ async def on_interval(ctx: Context):
     ctx.logger.info(f"My count is: {current_count}")
     ctx.storage.set("count", current_count + 1)
  
-if __name__ == "__main__":
-    agent.run()
+agent.run()
