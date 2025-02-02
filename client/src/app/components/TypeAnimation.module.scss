@@ -1,0 +1,41 @@
+/* Hero Section - Main Container */
+.hero {
+    position: relative;
+    height: 100vh;
+    background-color: #324DC7; /* Blue background */
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0% 75%); /* Slanted background */
+    z-index: 1; /* Ensure the background is behind the text */
+  }
+  
+  /* Text Container */
+  .textContainer {
+    position: absolute;
+    top: 20%; /* Adjust this to move the text higher */
+    width: 100%;
+    text-align: center;
+    z-index: 2; /* Ensure the text is above the background */
+    color: #fff;
+    font-size: 2rem;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Typing Animation */
+  .typingAnimation {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .cursor {
+    display: inline-block;
+    width: 1px;
+    height: 1em;
+    background-color: #fff;
+    animation: blink 0.7s step-end infinite;
+  }
+  
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
+  

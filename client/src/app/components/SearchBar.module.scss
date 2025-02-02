@@ -1,0 +1,36 @@
+// .searchContainer {
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     height: 100vh; /* Full screen height */
+//     background-color: #324DC7; /* Optional background color for testing */
+//   }
+  
+  .searchWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Background for the search bar */
+    border: 5px solid #4b9fe1; /* Blue border */
+    border-radius: 50px; /* Fully rounded corners */
+    padding: 0.5rem 1rem; /* Inner padding */
+    width: 500px; /* Width of the search bar */
+    max-width: 90%; /* Ensure it’s responsive */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+  
+  .searchInput {
+    flex: 1; /* Make the input take up all the space */
+    border: none; /* Remove default border */
+    outline: none; /* Remove default outline */
+    font-size: 1rem; /* Text size */
+    color: #6e6e6e; /* Text color */
+    background: none; /* Transparent background */
+    padding: 0.5rem; /* Inner padding */
+  }
+  
+  .searchInput::placeholder {
+    color: #6e6e6e; /* Placeholder text color */
+    opacity: 0.7;
+  }
+  
