@@ -1,21 +1,25 @@
-from uagents import Agent, Context
-from pre_processing import parquet_to_tabular
-from sentence_transformer import sentence_transformer
+from uagents import Agent, Context, Model
 
-# Define the agent
-agent = Agent(name="SentenceTransformerAgent")
+# Define the query model
+class QueryRequest(Model):
+    query: str
 
+class QueryResponse(Model):
+    response: str
 
-@agent.on_event("startup")
-async def initialize_storage(ctx: Context):
-    ctx.logger.info("Agent has started!")
+agent = Agent(name="QueryProcessor")
 
-@agent.on_event("query_received")
-async def handle_query(ctx: Context):
-    query = ctx.args.get("query", "")  # Query passed from client
-    result = sentence_transformer(query)
-    ctx.logger.info(f"Transformed query: {result}")
-    ctx.storage.set("transformed_query", result)
+def x(query: str) -> str:
+    return f"Processed: {query}"  # Modify this function as needed
+
+@agent.on_message(model=QueryRequest, replies=QueryResponse)
+async def handle_query(ctx: Context, sender: str, msg: QueryRequest):
+    ctx.logger.info(f"Received query: {msg.query}")
+    
+    processed_query = x(msg.query)
+    
+    response_msg = QueryResponse(response=processed_query)
+    await ctx.send(sender, response_msg)
 
 if __name__ == "__main__":
     agent.run()
