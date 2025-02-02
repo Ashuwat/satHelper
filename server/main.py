@@ -1,7 +1,13 @@
 # Use Gemini to make a phrase your question in the right way 
 # Use a KNN to vectorize the data and use it to get the most relevant problems
-from helperFunc.pre_processing import parquet_to_tabular
+from pre_processing import parquet_to_tabular
+from cors_config import add_cors_middleware
+from fastapi import FastAPI
 
-if __name__ == "__main__":
-    x = parquet_to_tabular('./dataset/tabular.parquet')
-    
+app = FastAPI()
+
+add_cors_middleware(app)
+
+@app.get("/data")
+async def get_data():
+    return {'message': 'message recieved in backend'}
