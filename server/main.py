@@ -2,4 +2,6 @@
 # Use a KNN to vectorize the data and use it to get the most relevant problems
 from helperFunc.pre_processing import parquet_to_tabular
 
-x = parquet_to_tabular('./dataset/tabular.parquet')
+if __name__ == "__main__":
+    x = parquet_to_tabular('./dataset/tabular.parquet')
+    

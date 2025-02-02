@@ -1,5 +1,5 @@
 from uagents import Agent, Context
-from sentence_transformer import sentence_transformer
+from sentence_transformer import something
 agent = Agent(name="bob")
  
 @agent.on_event("startup")

@@ -24,3 +24,5 @@ def sentence_transformer():
     best_match_score = distances[0][0]
 
     return f"Best match: {stored_queries[best_match_idx]} (Similarity: {best_match_score:.4f})"
+
+sentence_transformer()
