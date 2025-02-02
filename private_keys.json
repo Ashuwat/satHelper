@@ -6,5 +6,9 @@
     "SentenceTransformerAgent": {
         "identity_key": "b48e4ad61e9e877595df5a87e6bf25a24d865f19c0c3a06c4d3d2845a7f5c8fd",
         "wallet_key": "XqnmK7D+qDEJlvecfXEv7EsTCYIWMwveuYJpfM6tlRM="
+    },
+    "QueryResponder": {
+        "identity_key": "75d4e0cc20808ffbb50e8ed6a78d1cdda91d5c4b154ad74fb0000e44bf376b3a",
+        "wallet_key": "3ttv0uJP93KMl+J2wqUbh9u894fZxog56bc97wo/cpQ="
     }
 }
